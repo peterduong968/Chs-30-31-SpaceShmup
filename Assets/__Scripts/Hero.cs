@@ -24,10 +24,11 @@ public class Hero : MonoBehaviour {
 
 
     //TODO: Add function delegate declaration
+    public delegate void WeaponFireDelegate();
+    public WeaponFireDelegate fireDelegate;
 
 
-
-	void Start()
+    void Start()
     {
         if (S == null)
         {
@@ -61,17 +62,19 @@ public class Hero : MonoBehaviour {
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {                          
-            TempFire();                                                   
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{                          
+        //    TempFire();                                                   
+        //}
 
         //TODO: Replace the TempFire call with the weapon delgate call
         // Use the fireDelegate to fire Weapons
         // First, make sure the button is pressed: Axis("Jump")
         // Then ensure that fireDelegate isn't null to avoid an error
-
-
+        if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        {
+            fireDelegate();
+        }
 
     }
 
@@ -79,24 +82,24 @@ public class Hero : MonoBehaviour {
 
 
     //TODO: replace or comment out later
-    void TempFire()
-    {                                                      
-        GameObject projGO = Instantiate<GameObject>(projectilePrefab);
+    //void TempFire()
+    //{                                                      
+        //GameObject projGO = Instantiate<GameObject>(projectilePrefab);
 
-        projGO.transform.position = transform.position;
-        Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
+       // projGO.transform.position = transform.position;
+        //Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
 
         //        rigidB.velocity = Vector3.up * projectileSpeed;        
 
-        Projectile proj = projGO.GetComponent<Projectile>();  
+       // Projectile proj = projGO.GetComponent<Projectile>();  
 
-        proj.type = WeaponType.blaster;
-        float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
-        rigidB.velocity = Vector3.up * tSpeed;
+       // proj.type = WeaponType.blaster;
+       // float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
+        //rigidB.velocity = Vector3.up * tSpeed;
     }
 
 
-    private void OnTriggerEnter(Collider other)
+private void OnTriggerEnter(Collider other)
     {
         Transform rootT = other.gameObject.transform.root;
         GameObject go = rootT.gameObject;
