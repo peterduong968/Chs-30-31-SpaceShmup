@@ -102,6 +102,8 @@ public class Main : MonoBehaviour {
     /// the WeaponType passed in, returns a new WeaponDefinition with a
     /// WeaponType of none..</returns>
     /// <param name="wt">The WeaponType of the desired WeaponDefinition</param>
+    /// 
+
     static public WeaponDefinition GetWeaponDefinition(WeaponType wt)
     {
         // Check to make sure that the key exists in the Dictionary
